@@ -1,63 +1,73 @@
 <!--
-kb-L2-domain-regulatory-uk · content · food-regulatory-facts.md
+kb-L2-domain-regulatory · content · food-regulatory-facts.md
 Layer: L2 (domain: food production & distribution). Consumed by:
 L1-vision-regulatory-feasibility-checker. Micro-KB content rules apply:
 max 1 line/bullet, max 15 words, no explanations, numbers not words,
 annotated with target category.
 
-JURISDICTION: United Kingdom. One geography per KB — the India
-counterpart is kb-L2-domain-regulatory-ind. Never merge rows: a mixed
-file lets a constraint cite the wrong country's rule and still look
-internally consistent.
+
+
+VERIFY BEFORE RELIANCE: thresholds and turnover limits below change often
+and several regimes (DPDP rules, labour codes) were phasing in at the time
+of writing. Confirm against current FSSAI notifications before this KB
+gates a real funding or build decision.
 -->
 
-# Food Production & Distribution — Regulatory Facts (UK)
+# Food Production & Distribution — Regulatory Facts
 
 ## Jurisdiction
 
-**Jurisdiction covered: United Kingdom (ISO 3166-1 alpha-2: GB).**
-Sub-national layers in scope: England, Scotland, Wales, Northern Ireland,
-and local authorities. Every statute, regulator and threshold below is
-UK law, including retained EU law. This KB covers no other country — an
-idea targeting a different country cannot be assessed from it, and no
-rule here may be translated onto one.
+**Jurisdiction covered: India (ISO 3166-1 alpha-2: IN).**
+Sub-national layers in scope: states and union territories, municipal bodies.
+Every statute, regulator and threshold below is Indian. This KB covers no
+other country — an idea targeting a different country cannot be assessed
+from it, and no rule here may be translated onto one.
 
 ## Registration & Licensing
-- Register as Food Business Operator (FBO) with local authority ≥28 days before trading (→ Constraint: Authorization)
-- Registration basis: Regulation (EC) 852/2004 Art. 6, retained UK law (→ Constraint: Authorization)
-- Most FBOs: registration only, no license required (→ Constraint: Authorization)
-- Meat, dairy, fish processing premises: require FSA/local-authority *approval*, not just registration (→ Constraint: Authorization)
-- Distance and online food sellers must still register with their local authority (→ Constraint: Authorization)
+- Food Safety and Standards Act, 2006 is the governing statute (→ Constraint: Authorization)
+- Every Food Business Operator (FBO) needs FSSAI registration or licence before trading (→ Constraint: Authorization)
+- Basic Registration: annual turnover up to 12 lakh (→ Constraint: Authorization)
+- State Licence: turnover above 12 lakh, up to 20 crore (→ Constraint: Authorization)
+- Central Licence: turnover above 20 crore, importers, multi-state operations (→ Constraint: Authorization)
+- Basis: FSS (Licensing and Registration of Food Businesses) Regulations, 2011 (→ Constraint: Authorization)
+- FSSAI licence number must be displayed on premises and on labels (→ Constraint: Labelling)
+- Municipal trade licence is a separate, additional state/local requirement (→ Constraint: Multi-jurisdiction risk)
 
 ## Food Hygiene & Safety
-- HACCP-based food safety management mandatory for all FBOs — Reg. 852/2004 Art. 5 (→ Constraint: Hygiene)
-- Food Hygiene Rating Scheme (FHRS): local authority scores 0–5 (→ Constraint: Hygiene)
-- FHRS display: mandatory in Wales/NI, voluntary in England (→ Constraint: Hygiene)
-- Food Safety Act 1990 s.21: "due diligence" defence available (→ Constraint: Liability)
-- Withdrawal and recall duty on the FBO — Reg. (EC) 178/2002 Art. 19 (→ Constraint: Traceability)
+- Schedule 4 of the 2011 Licensing Regulations sets GMP/GHP by business type (→ Constraint: Hygiene)
+- HACCP-based food safety plan required for Central Licence categories (→ Constraint: Hygiene)
+- Food Safety Supervisor trained under FoSTaC mandatory for most licensed FBOs (→ Constraint: Hygiene)
+- FSS (Food Recall Procedure) Regulations, 2017 require a documented recall plan (→ Constraint: Traceability)
+- Annual food safety audit required for high-risk categories — FSS (Food Safety Auditing) Regs, 2018 (→ Constraint: Hygiene)
 
-## Allergen Labelling
-- 14 major allergens must be declared: celery, gluten cereals, crustaceans, eggs, fish, lupin, milk, molluscs, mustard, tree nuts, peanuts, sesame, soybeans, sulphites (→ Constraint: Labelling)
-- Natasha's Law (in force Oct 2021): full ingredient/allergen labelling required on PPDS food (→ Constraint: Labelling)
-- Food Information Regulations 2014 / retained Reg. 1169/2011: baseline labelling for pre-packed food (→ Constraint: Labelling)
+## Labelling
+- FSS (Labelling and Display) Regulations, 2020 govern all pre-packaged food (→ Constraint: Labelling)
+- Veg/non-veg symbol mandatory: green dot vegetarian, brown dot non-vegetarian (→ Constraint: Labelling)
+- Allergen declaration mandatory — cereals containing gluten, crustaceans, eggs, fish, peanuts, soybeans, milk, tree nuts, added sulphites (→ Constraint: Labelling)
+- Legal Metrology (Packaged Commodities) Rules, 2011: MRP, net quantity, importer details (→ Constraint: Labelling)
+- Date marking: "best before" or "expiry"/"use by" per category (→ Constraint: Labelling)
 
 ## Distribution & Cold Chain
-- Chilled food: hold at 8°C or below — Food Safety and Hygiene (England) Regs 2013 (→ Constraint: Cold Chain)
-- Raw milk for further processing: chilled to 8°C or below, 6°C if not collected daily (→ Constraint: Cold Chain)
-- Frozen food: hold at -18°C or below (→ Constraint: Cold Chain)
-- Traceability: "one step back, one step forward" record-keeping mandatory — Reg. (EC) 178/2002 Art. 18 (→ Constraint: Traceability)
-- Temperature monitoring required during transport, not only storage (→ Constraint: Cold Chain)
+- FSS (Food Products Standards and Food Additives) Regulations, 2011 set product temperature standards (→ Constraint: Cold Chain)
+- Chilled/refrigerated storage generally 0-4°C; frozen at -18°C or below (→ Constraint: Cold Chain)
+- Schedule 4 Part V covers transportation hygiene and temperature control (→ Constraint: Cold Chain)
+- Traceability: one-step-back, one-step-forward records required under the 2017 Recall Regulations (→ Constraint: Traceability)
+- Temperature control applies in transport, not only in storage (→ Constraint: Cold Chain)
+- FSSAI Food Safety and Standards (Import) Regulations, 2017 apply to imported consignments (→ Constraint: Authorization)
 
 ## Cross-Cutting
-- Primary Authority Scheme: partner with ONE local authority for consistent advice across multi-LA operations (→ Constraint: Multi-jurisdiction risk)
-- Food law is devolved: FSA covers England/Wales/NI, FSS covers Scotland (→ Constraint: Multi-jurisdiction risk)
-- Weights and Measures Act 1985: quantity/weight labelling accuracy enforced by Trading Standards (→ Constraint: Labelling)
-- Novel ingredients (not eaten significantly pre-1997 in EU/UK) require pre-market authorisation — Reg. (EU) 2015/2283 (→ Constraint: New ingredients)
-- Health and nutrition claims restricted — retained Reg. (EC) 1924/2006 (→ Constraint: Advertising)
+- FSS Act s.26 places primary liability on the FBO for food safety (→ Constraint: Liability)
+- Penalties under FSS Act ss.48-67; unsafe food attracts criminal liability (→ Constraint: Liability)
+- State Food Safety Commissioners enforce; central FSSAI sets standards (→ Constraint: Multi-jurisdiction risk)
+- Multi-state operations need Central Licence plus state-level compliance (→ Constraint: Multi-jurisdiction risk)
+- Novel food requires prior approval — FSS (Approval of Non-Specified Food) Regulations, 2017 (→ Constraint: New ingredients)
+- Health and nutrition claims restricted — FSS (Advertising and Claims) Regulations, 2018 (→ Constraint: Advertising)
+- E-commerce food sellers carry additional FSSAI duties, incl. licence display (→ Constraint: Authorization)
 
 ---
-*Jurisdiction: United Kingdom · Last reviewed: 2026-08-24 · Review cadence: quarterly
-(food regulation changes more frequently than most domains — verify against current
-FSA/FSS guidance before use in a real regulatory-feasibility assessment, not just
-against this KB alone). Post-EU-exit divergence is ongoing: confirm whether a
-retained EU instrument still applies in the form cited.*
+*Jurisdiction: India · Last reviewed: 2026-08-21 · Review cadence: quarterly
+(food regulation changes more frequently than most domains — verify against
+current FSSAI notifications before use in a real regulatory-feasibility
+assessment, not just against this KB alone). Turnover thresholds are in INR
+and are revised periodically; treat the figures above as indicative and
+confirm the current limits.*

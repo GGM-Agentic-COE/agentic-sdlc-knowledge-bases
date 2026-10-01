@@ -1,87 +1,86 @@
 <!--
-kb-L1-regulatory-frameworks-index-uk · content · regulatory-bodies-index.md
+kb-L1-regulatory-frameworks-index · content · regulatory-bodies-index.md
 Layer: L1 (enterprise, domain-agnostic). Micro-KB content rules apply:
 max 1 line/bullet, max 15 words, no explanations, numbers not words.
 
-JURISDICTION: United Kingdom. The KB is domain-agnostic but NOT
-jurisdiction-agnostic — one geography per deployment. Serving two
-geographies needs two KBs, not merged rows. The India pair is
-kb-L1-regulatory-frameworks-index-ind / kb-L2-domain-regulatory-ind.
+JURISDICTION: India. This KB was UK-scoped until 2026-08-21 and was
+re-scoped when the deployment's target geography changed. The KB is
+domain-agnostic but NOT jurisdiction-agnostic — one geography per
+deployment. Serving two geographies needs two KBs, not merged rows.
 
 Two sections. #cross-domain-index maps an activity to its regulator.
 #coverage-categories is the sweep list: every category here is either a
 constraint or a declared not-applicable entry. Both the checker and its
 evaluator read this file, so the sweep and its audit are the same list.
 
-DEVOLVED/LOCAL: many UK regimes bind at more than one level — food
-registration and inspection, licensing, trading standards, building
-control. A UK-wide answer alone is incomplete where the idea operates in
-Scotland, Wales or Northern Ireland, or across several local authorities.
-See the checker prompt's sub-national edge case.
+CENTRE/STATE: many Indian regimes bind at BOTH levels — food licensing,
+labour, factories, legal metrology, trade licences, professional tax. A
+central-law answer alone is incomplete. See the checker prompt's
+state-vs-centre edge case.
 -->
 
-# UK Regulatory Bodies Index (Cross-Domain)
+# Regulatory Bodies Index (Cross-Domain)
 
 ## Jurisdiction
 
-**Jurisdiction covered: United Kingdom (ISO 3166-1 alpha-2: GB).**
-Sub-national layers in scope: England, Scotland, Wales, Northern Ireland,
-and local authorities. This index covers no other country. An idea
-targeting a different country cannot be assessed from it.
+**Jurisdiction covered: India (ISO 3166-1 alpha-2: IN).**
+Sub-national layers in scope: states and union territories, municipal bodies.
+This index covers no other country. An idea targeting a different country
+cannot be assessed from it.
 
 Use to identify the correct regulator category before loading a
 domain-specific L2 regulatory KB for detailed rules.
 
-## Cross-Domain Index
-
-- Financial services, payments → FCA, PRA (Bank of England) (→ CON-Regulatory)
-- Food safety & standards → FSA (England/Wales/NI), FSS (Scotland) (→ CON-Regulatory)
-- Local food registration & inspection → Environmental Health, Trading Standards (→ CON-Regulatory)
-- Data protection & privacy → ICO (UK GDPR, Data Protection Act 2018) (→ CON-Regulatory)
-- Cybersecurity & incident reporting → NCSC; ICO for personal data breaches (→ CON-Regulatory)
-- Workplace health & safety → HSE (Health and Safety Executive) (→ CON-Regulatory)
-- Medicines & medical devices → MHRA (→ CON-Regulatory)
-- Telecoms & broadcasting → Ofcom (→ CON-Regulatory)
-- Energy → Ofgem (→ CON-Regulatory)
-- Nuclear → ONR (Office for Nuclear Regulation) (→ CON-Regulatory)
-- Advertising standards, all sectors → ASA; CMA for unfair practices (→ CON-Regulatory)
-- Competition & consumer protection → CMA, Trading Standards (→ CON-Regulatory)
-- General product safety, non-food consumer goods → OPSS (→ CON-Regulatory)
-- Product conformity marking → UKCA (GB), UKNI/CE (Northern Ireland) (→ CON-Regulatory)
-- Weights, measures, pre-packed quantity → Trading Standards (→ CON-Regulatory)
-- Employment, worker status, wages → Employment Tribunals, HMRC, EASI (→ CON-Regulatory)
-- Pensions & auto-enrolment → The Pensions Regulator (→ CON-Regulatory)
-- Environment, waste, packaging EPR → Environment Agency, SEPA, NRW, NIEA (→ CON-Regulatory)
-- Accessibility & equality duties → EHRC (Equality Act 2010) (→ CON-Regulatory)
-- Export control & sanctions → ECJU (DBT); OFSI for financial sanctions (→ CON-Regulatory)
-- Tax, VAT, e-invoicing, records → HMRC (→ CON-Regulatory)
-- Corporate records & filings → Companies House (→ CON-Regulatory)
-- Intellectual property → UK IPO (patents, designs, trade marks) (→ CON-Regulatory)
-- Gambling, alcohol, age-restricted supply → Gambling Commission, licensing authorities (→ CON-Regulatory)
-- Cross-local-authority consistency → Primary Authority Scheme (→ CON-Regulatory)
+- Food safety & standards → FSSAI (central), State Food Safety Commissioner (→ CON-Regulatory)
+- Local food licensing & inspection → State Food Safety Dept, municipal trade licence (→ CON-Regulatory)
+- Data protection & privacy → Data Protection Board of India, MeitY (DPDP Act 2023) (→ CON-Regulatory)
+- Cybersecurity incident reporting → CERT-In (→ CON-Regulatory)
+- Financial services, banking, payments → RBI (→ CON-Regulatory)
+- Securities & capital markets → SEBI (→ CON-Regulatory)
+- Insurance → IRDAI (→ CON-Regulatory)
+- Consumer protection & unfair trade → CCPA, Consumer Commissions (→ CON-Regulatory)
+- Competition & platform conduct → CCI (→ CON-Regulatory)
+- Advertising standards → ASCI (self-regulatory), CCPA (statutory) (→ CON-Regulatory)
+- Product standards & certification → BIS; MeitY CRS for electronics (→ CON-Regulatory)
+- Wireless & telecom equipment approval → WPC (DoT) ETA; TEC MTCTE (→ CON-Regulatory)
+- Telecom services & broadcasting → TRAI, DoT, MIB (→ CON-Regulatory)
+- Weights, measures, pre-packaged declarations → Legal Metrology, state Controllers (→ CON-Regulatory)
+- Medicines & medical devices → CDSCO (→ CON-Regulatory)
+- Workplace health & safety → State Chief Inspector of Factories, DGFASLI (→ CON-Regulatory)
+- Labour, wages, industrial relations → State Labour Dept (→ CON-Regulatory)
+- Social security contributions → EPFO, ESIC (→ CON-Regulatory)
+- Environment, pollution, waste → CPCB, State Pollution Control Boards (→ CON-Regulatory)
+- Energy & electricity → CERC, State Electricity Regulatory Commissions (→ CON-Regulatory)
+- Nuclear → AERB (Atomic Energy Regulatory Board) (→ CON-Regulatory)
+- Foreign trade & export control → DGFT; SCOMET list for dual-use (→ CON-Regulatory)
+- Indirect tax & e-invoicing → CBIC (GST) (→ CON-Regulatory)
+- Direct tax → CBDT (→ CON-Regulatory)
+- Corporate records & filings → MCA, Registrar of Companies (→ CON-Regulatory)
+- Intellectual property → CGPDTM (patents, designs, trade marks) (→ CON-Regulatory)
+- Accessibility & disability rights → DEPwD (RPwD Act 2016) (→ CON-Regulatory)
 
 ## Coverage Categories (sweep list)
 
 Sweep every category. Each is a constraint, or a not-applicable entry with a reason.
 
-- Authorisation, licensing, registration, permits — including devolved and local-authority layers
-- Data protection & privacy — lawful basis, transparency, retention, data subject rights
+- Authorisation, licensing, registration, permits — including state and municipal layers
+- Data protection & privacy — notice, consent, purpose limitation, retention, data principal rights
 - Children's data and other heightened-duty categories — where the user segment implies it
-- International data transfer — processing, hosting, or support outside the UK
-- Cybersecurity, incident reporting & log retention — applies regardless of personal data
+- Cross-border data transfer & data localisation — processing, hosting, or support outside India
+- Cybersecurity incident reporting & log retention — applies regardless of personal data
 - Automated decision-making, profiling, AI obligations — a model deciding about a person
-- Consumer protection, unfair trading, e-commerce duties — where the user is a consumer
+- Consumer protection, unfair trade practices, e-commerce duties — where the user is a consumer
 - Advertising, marketing, claim substantiation — health, environmental, performance claims
-- Product safety, certification, conformity marking — anything physical, incl. UKCA
-- Weights, measures, and pre-packed quantity declarations
-- Food-specific rules — registration, approval, labelling, allergens, hygiene
-- Sector safety & conduct regimes — workplaces, medicines, devices, telecom, energy, nuclear
+- Product standards, certification, conformity marking — anything physical, incl. electronics
+- Weights, measures, and pre-packaged commodity declarations
+- Food-specific rules — licensing, labelling, allergens, veg/non-veg mark, hygiene
+- Sector safety & conduct regimes — factories, medicines, devices, telecom, energy, nuclear
 - Payments authorisation & financial crime — only where funds are held or moved
-- Employment, worker status, agency labour, pensions auto-enrolment
-- Environment, permits, waste, packaging and e-waste EPR
+- Employment, worker classification, contract labour, social security
+- Environment, pollution consents, e-waste and packaging EPR
 - Accessibility — any public-facing digital interface
 - Intellectual property & third-party data licensing — data or content not owned
-- Export control, sanctions, and restricted-party screening — where the idea crosses borders
-- Tax, VAT, and statutory record-keeping — duties created by the transaction model
+- Export control, SCOMET, and restricted-party screening — where the idea crosses borders
+- Tax, e-invoicing, and statutory record-keeping — duties created by the transaction model
 - Competition & platform conduct — where the idea is a marketplace or intermediary
 - Age-restricted or conditional supply — where the product category implies it
