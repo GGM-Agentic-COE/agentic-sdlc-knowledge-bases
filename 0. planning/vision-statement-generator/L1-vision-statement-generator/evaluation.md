@@ -1,36 +1,38 @@
-# Evaluation — L1-vision-statement-generator
+# Evaluation — L1-vision-regulatory-feasibility-checker-evaluator
+
+This covers THIS evaluator's own meta-quality — not the generator's rubric
+(loaded at runtime from `../L1-vision-regulatory-feasibility-checker/evaluation.md`).
 
 ## Checks
-- [ ] All required fields present (see output_schema.json's top-level required list)
-- [ ] **BLOCKER — Reconciliation:** every constraint_id in regulatory_posture.constraint_summaries appears in at least one open_risks entry's related_ids — coverage, not 1:1 count; grouping related Amber items into one combined risk is fine, a constraint_id appearing in NO entry is not
-- [ ] problem_statement/target_users/value_proposition do not contradict idea-brief.json (the upstream source of record)
-- [ ] roadmap phase 1 addresses the single most severe open risk
-- [ ] executive_summary introduces no claim absent from the sections below it
-- [ ] viability_score in items and in vision.md matches regulatory-feasibility.md and the input parameter exactly — carried, never recomputed, re-derived, rounded, or averaged
-- [ ] Where the score was capped upstream by a Red or legal-review constraint, that constraint is covered in open_risks and named as the biggest open risk in the executive summary — the number and the narrative describe the same situation
-- [ ] Product Name: the H1 and the Product Name row carry the same name. A name the agent proposed is labelled as proposed in the Product Name row — a proposed name presented as the user's is a fail
-- [ ] vision.md was saved to blob storage in the request's folder_name, and the artifact's storage.location was built from the write tool's message. No Confluence tool was called by the generator — publishing is the evaluator's step, after evaluation. Nothing was written to GitHub
+- [ ] Every constraint's severity label was checked against its own rationale, not accepted at face value
+- [ ] Any overall_status "discount" claim was independently validated (every Amber/Red item genuinely has a non-legal-review mitigation) before being approved
+- [ ] No mitigation was invented to rescue a Red constraint from escalation
+- [ ] The jurisdiction was RESOLVED from the brief's `target_geography` and the KBs' own `#jurisdiction` declarations, not assumed — `groundedness_check.brief_target_geography` and `kb_declared_jurisdiction` record both
+- [ ] Every citation was checked for JURISDICTION, not only for existence and plausibility — `out_of_jurisdiction_citations` reflects what was found, and each produced a fail finding. A real regulation of the wrong country passes both an existence check and a plausibility check; only the jurisdiction check catches it
+- [ ] False equivalence was checked: a local regime named correctly but argued through a foreign analogue's mechanics is a finding, not a stylistic quibble
+- [ ] A KB-grounded assessment produced against a geography the KBs do not declare was escalated, not repaired field-by-field — there is nothing to fix when every citation names law that does not bind
+- [ ] The category coverage sweep was re-run against `kb-L1-regulatory-frameworks-index#coverage-categories` — the same list the generator walked, never a list authored here. `groundedness_check.uncovered_categories` reflects what was actually found, and a non-empty result produced a finding
+- [ ] No finding was raised against a category absent from `#coverage-categories`, however sensible that category seemed
+- [ ] **BLOCKER — Viability re-derivation:** `viability_check` records a score derived from the FINAL post-fix constraints, not copied from the generator. `caps_expected` matches what those constraints actually trigger, `rederived_score` is the lowest of the weighted score and every expected cap, and `items.viability` carries that derivation
+- [ ] `items.viability` is present and complete on every final_decision, including `escalate_to_hitl`
+- [ ] Where a fix changed a severity, the score moved with it — a corrected constraint whose cap was never applied is a defect in this evaluator, not only in the generator
+- [ ] A legitimate INSUFFICIENT_CONTEXT failure is evaluated, not "fixed"
 
 ## Scores (minimum per dimension)
 | Evaluator | ≥ | Checks |
 |-----------|---|--------|
-| Faithfulness | 0.90 | Every carried-forward item matches its upstream source |
-| Hallucination | ≤ 0.10 | No claim introduced that isn't grounded in an upstream input — and no market picture inferred when no market analysis was available |
-| Consistency | 0.95 | Reconciliation check (above) passes fully — this is the highest consistency bar of any Phase 0 agent, since a dropped risk here reaches a human decision-maker |
-| Relevance | 0.85 | Roadmap and metrics are usable as-is for Phase 1 planning |
-| Reasoning quality | 0.80 | Every north_star_metric and roadmap phase explains its derivation |
-| Citation completeness | N/A | This agent synthesizes upstream agent outputs, not KB/external sources — reconciliation check substitutes for citation |
-
-**Sources of record:** `idea-brief.json` for problem/users/value (JSON, read by
-key path), `regulatory-feasibility.md` for the constraint list *and* the
-viability score, `market-analysis.md` for market context where it exists.
-There is no `viability-assessment.md` and no viability scorer agent — a
-reference to either is a stale artifact of an earlier pipeline version.
+| Faithfulness | 0.97 | Findings accurately re-derive severity from each constraint's own rationale; the viability derivation follows the constraints rather than the reported number |
+| Hallucination | ≤ 0.03 | No invented mitigation, no invented citation validation, no invented component score |
+| Consistency | 0.95 | overall_status conclusion matches what the individual constraints actually support, and viability_score matches both |
+| Reasoning quality | 0.9 | Every severity-mismatch finding explains specifically why the label doesn't fit the rationale |
 
 ## Reflection Checklist
-- [ ] Zero regulatory Amber/Red items missing from open_risks
-- [ ] executive_summary written last, after all other sections finalized
-- [ ] viability_score reported honestly even if low — not omitted or softened
+- [ ] Checked every constraint, not just the ones already flagged by the generator's own reasoning field
+- [ ] Escalated every unmitigated Red — zero exceptions, zero "close enough"
+- [ ] Verified the discount rule's precondition (ALL Amber/Red items mitigated) rather than assuming it from the stated rationale alone
+- [ ] Re-derived viability arithmetic independently rather than re-checking the generator's stated sum
+- [ ] Never adjusted a component score to move the final score toward a wanted side of the threshold of 7
+- [ ] A viability correction was written into BOTH regulatory-feasibility.md's header table and its Viability Score section, not one of the two
 
 ## Reflection Process
 1. Generate → 2. Check all items above → 3. Fix silently → 4. Deliver final only
