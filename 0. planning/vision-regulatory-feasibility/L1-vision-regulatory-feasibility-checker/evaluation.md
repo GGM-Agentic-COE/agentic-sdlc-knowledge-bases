@@ -24,7 +24,7 @@
 | Consistency | 0.90 | overall_status is justified by, not contradicted by, the individual constraints; viability_score is justified by, not contradicted by, overall_status and the caps |
 | Relevance | 0.85 | Constraints assessed are the ones actually applicable to the stated activity/geography |
 | Reasoning quality | 0.85 | Every mitigation is concrete and actionable, not generic ("comply with regulations"); every viability component names what it was traced to |
-| Citation completeness | 1.00 | 100% required — this is the one agent where citation completeness is a hard requirement, not a soft score |
+| Citation completeness | 1.00 | 100% required — this is the one agent where citation completeness is a hard requirement, not a soft score |  
 
 ## Reflection Checklist
 - [ ] No Red constraint downgraded to Amber to avoid writing a mitigation, or to avoid firing the red_constraint cap
