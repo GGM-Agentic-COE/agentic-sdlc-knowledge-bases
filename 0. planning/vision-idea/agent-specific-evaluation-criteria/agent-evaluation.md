@@ -1,4 +1,4 @@
-# Agent-Specific Evaluation Criteria — L1 Vision Idea Intake
+#L1 Vision Idea Intake-Evaluation Criteria
 
 ## Purpose
 
