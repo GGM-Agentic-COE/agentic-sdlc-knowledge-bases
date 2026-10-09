@@ -3,7 +3,7 @@
 This is the generator's own basic self-check only. Deep, independent re-derivation is delegated
 downstream to ONE single evaluator agent (not part of this pack):
 - an impact-assessment evaluator, which re-checks the catalog/CMDB findings against
-  L1-impact-assessment.md, and independently re-derives the cycle_check/critical_path from the
+  <Product Name>-assessment.md, and independently re-derives the cycle_check/critical_path from the
   JSON graph items.
 
 ## Quality Gates
@@ -49,7 +49,7 @@ downstream to ONE single evaluator agent (not part of this pack):
 - [ ] All node IDs unique, kebab-case (^[a-z0-9-]+$)
 
 ### Mermaid Graph
-- [ ] The embedded mermaid graph in L1-impact-assessment.md matches the JSON graph items
+- [ ] The embedded mermaid graph in <Product Name>-assessment.md matches the JSON graph items
       node-for-node, edge-for-edge, including cycle annotations when FAIL
 - [ ] Node shapes correct per type: component → rectangle `[]`, existing-ci → subroutine `[[]]`,
       external-dependency → stadium `([])`
@@ -62,9 +62,9 @@ downstream to ONE single evaluator agent (not part of this pack):
 - [ ] PASS → one `%% CRITICAL PATH: ...` comment per tied chain
 
 ### Output Shape
-- [ ] Full L1-impact-assessment.md text inlined as `content` field of `content.artifacts[0]` —
+- [ ] Full <Product Name>-assessment.md text inlined as `content` field of `content.artifacts[0]` —
       not in any summary field, not truncated
-- [ ] No blob storage write performed by this agent (persistence delegated to workflow summarizer)
+- [ ] No confluence write performed by this agent (persistence delegated to workflow summarizer)
 - [ ] No `summary`/`*_summary` item field contains the full artifact text instead of a distillation
 
 ## Scores (≥ threshold to pass)
@@ -73,21 +73,12 @@ downstream to ONE single evaluator agent (not part of this pack):
 | Faithfulness | 0.90 | Every item traces to prd_output / service_catalog / cmdb_export / KB / Phase A |
 | Hallucination | ≤ 0.10 | No invented FR, CI, service, node, or edge |
 | Consistency | 0.90 | Phase B never contradicts Phase A; JSON items and the embedded mermaid graph never diverge |
-| Relevance | 0.85 | The single artifact (L1-impact-assessment.md) is directly usable by its named downstream consumers |
+| Relevance | 0.85 | The single artifact (<Product Name>-assessment.md) is directly usable by its named downstream consumers |
 | Reasoning quality | 0.80 | Blast-radius, edge-direction, and cycle/critical-path decisions explained |
 | Citation completeness | 0.95 | Components Identified rows cite FR-NNN; graph nodes cite source_requirement |
 
-## Reflection Checklist
-- [ ] Phase order respected: Impact Assessment first, Dependency Graph second, same run
-- [ ] All 7 required document sections present, no placeholder text
-- [ ] IDs (FR-NNN, node ids) valid, kebab-case where required, no duplicates
-- [ ] Mermaid graph node labels are quoted to avoid syntax errors
-- [ ] Executive Summary introduces no claim untraceable to findings below
-- [ ] Export freshness and contamination checked (or "no parent enterprise" explicitly stated)
-- [ ] Full artifact text in artifacts[0].content, not in any summary field
-- [ ] No blob storage write attempted — artifact passed inline to downstream evaluator
 
 ## Reflection Process
 1. Generate Phase A → self-check → 2. Generate Phase B from Phase A's own output →
 self-check → render mermaid graph → append to document → 3. Run Quality Gates above → 4. Fix silently →
-5. Deliver final combined AgentOutput JSON only, with the full markdown text inline. Do NOT print interim output.insert agentic specific evalation.md here
+5. Deliver final combined AgentOutput JSON only, with the full markdown text inline. Do NOT print interim output.
