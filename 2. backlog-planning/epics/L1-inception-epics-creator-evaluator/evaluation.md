@@ -1,105 +1,167 @@
-# Evaluation Criteria — L1-inception-epics-creator-evaluator
+# Evaluation — L1-inception-epics-creator-evaluator
 
-This evaluator inherits **all** quality gates and reflection checklist items from `L1-inception-epics-creator`'s own `evaluation.md` (reproduced in Section A below), since it must be able to independently re-derive what a correct Epic looks like. Section B adds the **8 mandatory named gates** required to score a candidate Epics output, plus the correction and decision process unique to this evaluator agent, using the AgentOutput v2 envelope (`agent_id`, `status`, `content.evaluation`).
+This covers THIS evaluator's own meta-quality — not the L1-inception-epics-
+creator's generation rubric. The Epic Creator's evaluation.md and the applicable
+Epic-authoring knowledge base are loaded at runtime and are not duplicated here.
 
----
+The evaluator must independently re-derive its findings from the approved PRD input,
+the Epic Creator output, the creator's evaluation.md, and the applicable knowledge-base
+guidance. It must not accept the generator's scores, conclusions, coverage claims,
+traceability claims, or rationale without verification.
 
-## SECTION A — Inherited Core Epics Creator Criteria (from L1-inception-epics-creator/evaluation.md)
+## Quality Gates
 
-### A.1 Quality Gates (must pass)
+### PRD and Epic Coverage (→ Reasoning quality, Faithfulness)
+- [ ] Every approved in-scope PRD requirement was independently checked for coverage by at
+      least one valid Epic — not accepted merely because the generator reported complete coverage.
+- [ ] The requirement-ID set represented across the Epic output matches the approved in-scope
+      PRD requirement set exactly: no required item omitted and no unsupported item introduced.
+- [ ] Coverage was verified by requirement identifiers and content, not by Epic count,
+      requirement count, section count, or the generator's coverage summary alone.
+- [ ] Every generated Epic was checked against the PRD's objectives, scope, business outcomes,
+      requirements, constraints, assumptions, dependencies, and source reference.
+- [ ] Any intentionally uncovered PRD content is supported by an explicit approved exclusion;
+      otherwise it is reported as a coverage gap.
+- [ ] Requirement order is preserved where the required output contract mandates it.
 
-| Criterion | Threshold | Method |
-|-----------|-----------|--------|
-| Every Epic has a non-null `prd_reference.file_path` | 100% | Automated: schema `required` check on `prd_reference` |
-| Macro feature pillars per Epic | 3–6 | Automated: array length check |
-| Out of Scope bullets per Epic | 1–6 | Automated: array length check |
-| Epic title length | 3–5 words | Automated: word-count regex on `title` |
-| `epic_id` format | `EP-\d{2}` | Automated: regex validation |
-| Risks contain only Critical Compliance categories | 100% | Automated: enum check on `category` |
-| No forbidden PRD sections present in Epic fields | 0 occurrences | Automated + LLM-judge |
-| `reference_links` non-empty | ≥1 | Automated: array length check |
-| No Feature/Story/task-level decomposition inside `macro_feature_pillars` | 0 occurrences | LLM-judge |
-| `target_date` is verbatim-or-null | 100% | LLM-judge |
-| Multi-Epic split correctness (kb-epics-best-practices §2.5) | 100% | LLM-judge |
-| Output validates against L1-inception-epics-creator's Epic schema | 100% | Automated: JSON Schema validation |
-| `content.artifacts[].storage.location` present and non-fabricated | 100% | Automated + LLM-judge |
+### Independent Epic Derivation Review (→ Reasoning quality, Relevance)
+- [ ] Every Epic boundary was independently re-derived from the approved PRD — not accepted
+      because the generator's grouping "looks reasonable."
+- [ ] Every Epic represents a coherent business capability or outcome and is not a Feature,
+      story, task, implementation step, project phase, or restatement of the complete PRD.
+- [ ] Epics were checked for duplication, material overlap, excessive fragmentation, and
+      unsupported consolidation.
+- [ ] Requirements grouped into the same Epic have a defensible shared outcome, capability,
+      or value stream grounded in the PRD.
+- [ ] Requirements that require distinct outcomes or independently governed delivery are not
+      combined merely to reduce the Epic count.
+- [ ] Shared capabilities are represented once and connected through grounded dependencies
+      rather than duplicated across Epics.
+- [ ] Every dependency was independently checked for necessity, direction, and valid target;
+      no dependency was accepted solely because the generator supplied it.
+- [ ] No Epic introduces unsupported functionality, actor, workflow, system, integration,
+      policy, business rule, outcome, priority, estimate, owner, release, sprint, or delivery date.
 
-### A.2 Reflection Checklist (applied to the candidate output being evaluated)
+### Epic Content Verification (→ Faithfulness, Relevance)
+- [ ] Every Epic contains a unique Epic ID and an outcome-focused title.
+- [ ] Every Epic contains a clear description of the capability, problem, and intended outcome.
+- [ ] Every Epic contains business value directly supported by the approved PRD.
+- [ ] Every Epic contains clear in-scope boundaries and, where needed, explicit out-of-scope
+      boundaries that prevent overlap or ambiguity.
+- [ ] Every Epic contains acceptance criteria that are specific, observable, testable, and
+      appropriate for Epic-level validation.
+- [ ] Every Epic contains dependencies, constraints, assumptions, and risks only when supported
+      by the approved PRD or applicable runtime guidance.
+- [ ] Every Epic contains the approved PRD source reference and exact supporting requirement IDs.
+- [ ] Optional fields remain empty or omitted when no approved source supports a value.
 
-- [ ] Every Epic has `prd_reference.file` and `prd_reference.file_path` populated
-- [ ] Macro feature pillars count is between 3 and 6 per Epic
-- [ ] No Traceability Matrix, Compound Requirement Split, Open Questions, Assumptions, or Glossary content appears anywhere
-- [ ] Risks section contains only FDA/SQF/HACCP/USDA/recall/plant-shutdown-critical items
-- [ ] Out of Scope has 1–6 condensed bullets
-- [ ] Constraints are strategic-altitude only
-- [ ] Title is 3–5 words, Title Case, capability-focused
-- [ ] `reference_links` includes at least a Full PRD link
-- [ ] `epic_id`s are sequential (EP-01, EP-02, ...)
-- [ ] Every item has a complete `metadata` block
-- [ ] `macro_feature_pillars` contain capability phrases only — no Feature/Story/task-level decomposition
-- [ ] Every `target_date` is verbatim or `null`
-- [ ] PRD-to-Epic cardinality followed kb-epics-best-practices §2.5
-- [ ] blob-storage-writer was called correctly, including on INSUFFICIENT_CONTEXT
+### Acceptance-Criteria Verification (→ Faithfulness, Consistency)
+- [ ] Every Epic's acceptance criteria were independently checked against the Epic description,
+      business value, scope, and mapped PRD requirements.
+- [ ] Collectively, the acceptance criteria validate the Epic outcome and all mandatory conditions
+      inherited from the mapped PRD requirements.
+- [ ] Acceptance criteria do not merely repeat the Epic title, description, or requirement text.
+- [ ] Acceptance criteria do not decompose the Epic into implementation tasks or prescribe an
+      unsupported solution.
+- [ ] Negative, exception, integration, compliance, and non-functional conditions are included
+      only when supported by the approved PRD or a loaded authoritative source.
+- [ ] No criterion combines unrelated outcomes into one untestable statement.
+- [ ] Acceptance criteria do not contradict one another, the Epic scope, or the approved PRD.
 
----
+### Grounding and Citation (→ Faithfulness, Hallucination)
+- [ ] Every finding names the specific Epic ID, affected PRD requirement ID, affected field,
+      and specific gate from the creator's evaluation.md or applicable knowledge base.
+- [ ] Every Epic cites the valid PRD source reference and exact supporting requirement IDs or
+      approved scope statements.
+- [ ] Every cited requirement, acceptance criterion, dependency, constraint, and source reference
+      was dereferenced and confirmed to exist in the supplied approved input.
+- [ ] PRD requirement identifiers are preserved exactly and are not renamed, reformatted,
+      merged, split, or invented.
+- [ ] Every finding distinguishes generator-output evidence from approved-source evidence.
+- [ ] No vague finding such as "looks incorrect," "insufficient detail," or "not compliant"
+      is returned without exact evidence and the violated gate.
 
-## SECTION B — Evaluator-Specific Gates (mandatory, 8 dimensions)
+### Fabrication Prevention (→ Hallucination)
+- [ ] No correction invents missing scope, business value, requirements, acceptance criteria,
+      dependencies, constraints, assumptions, risks, references, estimates, owners, or dates.
+- [ ] No correction silently changes an Epic's requirement mapping without documenting the
+      approved evidence supporting the change.
+- [ ] No unsupported Epic is retained merely to preserve the generator's reported coverage.
+- [ ] Missing source context results in INSUFFICIENT_CONTEXT or escalation when it prevents a
+      grounded correction; it is never filled using plausible assumptions.
+- [ ] No requirement is marked covered solely because its identifier appears in an Epic without
+      substantive representation in the Epic's description, scope, or acceptance criteria.
 
-Every evaluation MUST score all 8 of the following named gates, each 0.0-1.0, in `content.evaluation.scores`. Every gate scoring below 1.0 MUST have at least one corresponding `fail` finding in `content.evaluation.findings[]` (`gate`, `status`, `detail`).
+### Consistency and Output Parity (→ Consistency)
+- [ ] Epic IDs are unique and conform to the required naming convention.
+- [ ] Requirement references resolve exactly to the approved PRD input.
+- [ ] Dependency references resolve to valid Epics or approved external dependencies.
+- [ ] Terminology remains consistent with the approved PRD.
+- [ ] The structured Epic items and rendered Epic artifact contain the same Epic set, fields,
+      acceptance criteria, dependencies, and traceability.
+- [ ] No correction is applied only to structured items or only to the rendered artifact.
+- [ ] Coverage summaries and traceability matrices, when present, match the actual Epic mappings.
+- [ ] The validated or corrected artifact is returned inline in the required AgentOutput shape,
+      without truncation or relocation into a summary field.
 
-| # | Gate name | What Is Assessed | Fail Condition |
-|---|-----------|-------------------|-----------------|
-| 1 | `faithfulness` | Every Epic field traces to an actual phrase/section in the source PRD (`L1-prd.md`, or the Epic's own `prd_reference.file_path` if it differs) | Any field cannot be traced to the PRD |
-| 2 | `completeness` | All PRD content that should have produced an Epic field was captured — no qualifying macro-capability or Critical-Compliance risk is missing | A qualifying pillar/risk/out-of-scope item present in the PRD is absent from the Epic |
-| 3 | `schema_compliance` | Candidate validates against `L1-inception-epics-creator`'s Epic schema exactly (required fields, enums, patterns, array bounds) | Any schema validation failure |
-| 4 | `regulatory_accuracy` | Risk `category`/`severity`/`target_date` and constraint text are factually correct copies/summaries of the PRD | A `target_date`, risk `category`, or `severity` misrepresents the PRD text |
-| 5 | `prd_traceability` | Every Epic's `prd_reference` resolves to the actual PRD location it was generated from | `prd_reference` missing, fabricated, or pointing to the wrong file |
-| 6 | `cardinality_compliance` | Correct number of Epics for the PRD's initiative structure per kb-epics-best-practices §2.5 (1 Epic per cohesive capability; multiple only for genuinely distinct initiatives) | Epic count doesn't match the PRD's actual initiative structure |
-| 7 | `title_and_altitude_quality` | Title 3-5 words Title Case; pillars 5-8 words capability-level; no leaked Feature/Story/technical detail; formatting rules (paragraph length, bullet nesting) | Any altitude/formatting rule violated |
-| 8 | `risk_filtering_quality` | Only Critical Compliance Threshold risks retained; no general delivery/engineering/training/vendor risks leaked in | Any non-qualifying risk included, or a qualifying risk omitted |
+### Status and Correction Handling (→ Consistency)
+- [ ] A legitimate INSUFFICIENT_CONTEXT or failed generator output is approved as such when the
+      missing context cannot be recovered from the supplied approved inputs.
+- [ ] An ungrounded generator output is never "fixed" by fabricating Epics or mandatory fields.
+- [ ] PASS is used only when all mandatory gates and score thresholds pass without content changes.
+- [ ] CORRECTED is used only when all identified defects were corrected using supplied evidence
+      and the corrected output then passes all mandatory gates and thresholds.
+- [ ] REJECTED is used when mandatory defects remain, correction requires unsupported context,
+      or the output cannot safely proceed downstream.
+- [ ] `escalate_to_hitl` is used only for genuinely unfixable ambiguity, conflicting approved
+      sources, or missing stakeholder decisions — never as a shortcut for evaluator work.
+- [ ] The overall status, pass boolean, dimension scores, findings, and corrected artifact agree.
 
-### B.1 Correction Process (mandatory)
+### Persistence and Downstream Safety (→ Consistency, Relevance)
+- [ ] No blob-storage write is performed when the workflow contract requires inline handoff.
+- [ ] No Jira create, update, or upload action is attempted by this evaluator.
+- [ ] The final validated or corrected Epic artifact is suitable for the downstream Feature
+      Decomposer, Feature Decomposer Evaluator, and Jira formatter/uploader without restructuring.
+- [ ] No generator score, evaluator score, approval status, or downstream execution result is
+      copied or fabricated as Epic artifact content.
 
-For every `fail` finding:
-1. Assign a sequential `id` (FND-01, FND-02, ...) in `findings[]`, with `gate`, `status: "fail"`, and `detail` explaining the issue.
-2. Determine whether it CAN be safely corrected using only the source PRD or already-present Epic content (e.g., re-extracting a mis-copied date, re-wording an over-long title using the PRD's own language, removing a hallucinated pillar, moving leaked Feature/Story detail out of a pillar).
-3. If fixable: apply the correction directly into the corrected `content.items`, and record it in `fixes_applied[]` with a sequential `id` (FIX-01, ...), the `finding_id` it resolves, `description`, `before`, `after`, `reasoning`.
-4. If NOT safely fixable (would require inventing information not present in the PRD): do NOT guess. Leave the finding unresolved (no matching `fixes_applied` entry) — this drives `final_decision` toward `"escalate_to_hitl"`.
-5. `content.items` always reflects every safe fix applied, even if some other findings remain unresolved.
+## Scores (≥ threshold to pass)
 
-### B.2 Final Decision Logic
+| Evaluator | ≥ | Checks |
+|-----------|---|--------|
+| Faithfulness | 0.95 | Findings and corrections accurately reflect the approved PRD and actual Epic output |
+| Hallucination | ≤ 0.05 | No finding or correction introduces unsupported scope, criteria, dependency, identifier, or delivery metadata |
+| Coverage | 0.95 | Every approved in-scope PRD requirement is substantively represented by one or more valid Epics |
+| Consistency | 0.90 | Status, pass boolean, scores, findings, structured items, artifact, and coverage mappings agree |
+| Relevance | 0.85 | Epics remain outcome-oriented, appropriately scoped, and usable by downstream consumers |
+| Reasoning quality | 0.85 | Every finding identifies the specific Epic, PRD requirement, evidence, and violated gate |
+| Acceptance-criteria quality | 0.90 | Criteria are complete, testable, traceable, non-contradictory, and appropriate for Epic level |
+| Citation completeness | 0.95 | Every Epic and evaluator finding includes complete PRD-source and requirement grounding |
 
-| `final_decision` | Condition |
-|----------|-----------|
-| `"approved"` | All 8 gates score 1.0 and zero findings failed. `content.items` is identical to the candidate. |
-| `"fixed_and_approved"` | One or more findings failed, and ALL were fixed. `content.items` differs from the candidate and now passes all gates. |
-| `"escalate_to_hitl"` | One or more failed findings could not be safely fixed (required source information is unavailable). `content.items` still contains all safe fixes applied, but at least one finding remains unresolved. |
+## Reflection Checklist
 
-> **Rule:** `"escalate_to_hitl"` is never used simply because minor, cosmetic issues exist — only when a genuinely blocking, unfixable gap remains. Minor fixable issues alone always resolve to `"fixed_and_approved"`.
+- [ ] No finding is a rubber stamp such as "looks fine" without an independent re-check.
+- [ ] Every approved in-scope PRD requirement was checked by set membership and content, not
+      inferred from counts or the generator's summary.
+- [ ] Every Epic boundary, grouping decision, dependency, and acceptance criterion was re-derived
+      from approved evidence.
+- [ ] Every finding names the affected Epic ID, PRD requirement ID, evidence, and violated gate.
+- [ ] No correction introduces unsupported content or silently changes traceability.
+- [ ] Legitimate INSUFFICIENT_CONTEXT is preserved rather than converted into fabricated Epics.
+- [ ] `escalate_to_hitl` is used only when the issue is genuinely unfixable from supplied evidence.
+- [ ] Any correction is applied consistently to structured Epic items, coverage mappings, and
+      the inline artifact.
+- [ ] Final status, pass boolean, scores, findings, and corrected output are mutually consistent.
+- [ ] No blob persistence or Jira upload was attempted.
 
-`overall_score` = average of the 8 gate scores * 10, rounded to 2 decimals. `pass` = true unless `final_decision == "escalate_to_hitl"`.
+## Reflection Process
 
-### B.3 Evaluator Reflection Checklist
+1. Evaluate the Epic Creator output →
+2. Independently check all gates above against the approved PRD input, creator evaluation.md,
+   and runtime knowledge-base guidance →
+3. Recalculate scores from observed evidence →
+4. Fix evidence-supported defects silently and consistently across items, mappings, and artifact →
+5. Re-run all gates and determine PASS, CORRECTED, or REJECTED →
+6. Deliver the final evaluator AgentOutput only.
 
-- [ ] All 8 gates are present in `scores`, each with a corresponding entry logic in `findings[]` if below 1.0
-- [ ] Every failed finding has a unique sequential `id`, correct `gate` back-reference, and accurate `detail`
-- [ ] Every fixed finding has a corresponding entry in `fixes_applied[]` with accurate `before`/`after`/`reasoning`
-- [ ] Every unresolved finding correctly drives `final_decision` toward `escalate_to_hitl` — never silently dropped
-- [ ] `content.items` validates against `L1-inception-epics-creator`'s Epic schema
-- [ ] `final_decision` matches the logic in B.2 exactly
-- [ ] No new hallucinated content was introduced while fixing
-- [ ] `content.artifacts[]` references `L1-epics.json` (the same filename the core agent wrote, overwritten in place) with a non-fabricated `storage.location`
-- [ ] `execution_summary` is plain text bullets, not JSON
-
-### B.4 Evaluator Reflection Process (mandatory)
-
-1. **Evaluate** candidate output against all 8 gates and Section A's checklist
-2. **Log** `[REFLECTING] Checking evaluation against evaluation.md Section B criteria`
-3. **Check** every item in B.3's checklist
-4. **Identify** any missed findings, incorrect fixable/unfixable calls, or decision-logic errors
-5. **Log** each finding: `[REFLECTING] Found: <description>`
-6. **Fix** the evaluation itself — amend scores, findings, fixes, or decision as needed
-7. **Log** each resolution: `[REFLECTING] Resolved: <what was fixed>`
-8. **Deliver** only the final, corrected evaluation output
-
-Reflection findings appear in `execution_summary` but interim output is never shown.
+Do NOT print interim analysis, generator self-checks, or unevaluated output.
