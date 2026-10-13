@@ -30,7 +30,7 @@
 ## Reflection Checklist
 - [ ] No Red constraint downgraded to Amber to avoid writing a mitigation, or to avoid firing the red_constraint cap
 - [ ] requires_legal_review used only where no precedented mitigation exists — check it isn't a default escape hatch, and note it caps the score at 6.5 when used
-- [ ] overall_status logic (worst-item vs. one-level-better-if-all-mitigated) is explicitly justified, not asserted
+- [ ] overall_status logic (worst-item vs. one-level-better-if-all-mitigated) is explicitly justified, not asserted  
 - [ ] The regulatory scenario patterns that applied (not-yet-in-force rules, transition relief, thresholds, extraterritorial reach, third-party permissions, pre-approval regimes, ongoing duties, overlapping regulators) are handled per the prompt's Edge Cases Section D, not flattened into a single generic constraint. These stay in the prompt, not the KB — they are behaviours, not facts
 - [ ] idea_clarity is scored from idea-brief.json's own content, never from how well this assessment was written
 - [ ] A below-threshold score is reported exactly as derived — not rounded up, not softened, no cap dropped to lift it above 7
