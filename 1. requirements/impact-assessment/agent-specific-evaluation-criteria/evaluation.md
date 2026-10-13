@@ -90,4 +90,4 @@ downstream to ONE single evaluator agent (not part of this pack):
 ## Reflection Process
 1. Generate Phase A → self-check → 2. Generate Phase B from Phase A's own output →
 self-check → render mermaid graph → append to document → 3. Run Quality Gates above → 4. Fix silently →
-5. Deliver final combined AgentOutput JSON only, with the full markdown text inline. Do NOT print interim output.insert agentic specific evalation.md here
+5. Deliver final combined AgentOutput JSON only, with the full markdown text inline. Do NOT print interim output.
