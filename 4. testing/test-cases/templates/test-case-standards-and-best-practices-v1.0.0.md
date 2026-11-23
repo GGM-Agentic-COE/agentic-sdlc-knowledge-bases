@@ -1,6 +1,6 @@
 # Test Case Standards and Best Practices
 
-## kb-test-case-authoring-standards v1.0.0
+## kb-test-case-authoring-standards v1.1.0
 
 Detailed authoring and review standards for ordinary executable test cases. This document complements, and does not replace, the applicable L0 common testing standards or an agent's approved contract.
 
@@ -15,14 +15,14 @@ Detailed authoring and review standards for ordinary executable test cases. This
 
 This standard defines how to design, write, review, and maintain test cases that verify approved product or process behavior.
 
-A test case is an executable specification of a focused objective, the required starting state, data constraints, actions, and verifiable expected results. A case may be manual or automation-ready depending on its contract and context.
+A test case is an executable specification of a focused objective, the required starting state, data constraints, actions, and verifiable expected results. A case is represented as either a manual test or a Cucumber (Gherkin) test, and is classified separately for automation suitability, in line with its contract and context.
 
 This standard does not define:
 
 - A universal test-management schema or platform-specific field mapping
 - Project-specific identifiers, status workflows, severity scales, or priority defaults
 - Requirements, product behavior, expected messages, limits, roles, or permissions
-- Automation code or execution permissions
+- Automation code, step definitions, or execution permissions
 - Adversarial case scope; adversarial cases must follow their approved specialist contract
 
 If this document conflicts with approved runtime requirements, the requirements govern product behavior. If it conflicts with the agent's approved output contract, the agent must follow its contract and report the conflict for governance review. Apply the approved L0 common testing standards for general grounding, precedence, traceability, privacy, safety, and responsibility boundaries.
@@ -79,6 +79,7 @@ The agent's output schema is authoritative. When the contract supports the field
 | Expected results | Give observable, deterministic outcomes tied to approved behavior. |
 | Postconditions | Include only if approved context specifies resulting state or cleanup. |
 | Environment | Reference the approved environment or constraints when needed; do not assume production equivalence or approval. |
+| Test representation | `manual`, `cucumber`, or `review`, decided by the Test Case Writer under Section 12.3, with a one-line reason. |
 | Automation suitability | Classify only when required and supported by interface, stability, access, and repeatability information. |
 | Review notes or gaps | Record unresolved decisions, missing information, or limitations using the contract's fields and statuses. |
 
@@ -210,7 +211,7 @@ Pairwise or other reduction MUST preserve mandatory, regulatory, critical, and e
 
 ---
 
-## 12. Priority, Risk, and Automation
+## 12. Priority, Risk, Automation, and Representation
 
 ### 12.1 Priority and risk
 
@@ -228,6 +229,51 @@ Classify a case as an automation candidate only when the applicable contract ask
 - `review`: feasibility depends on unavailable interface, environment, tool, access, or stability information.
 
 Automation suitability does not authorize script generation. Automation agents must use approved frameworks and environments, preserve case intent, avoid hard-coded secrets, and report actual execution evidence separately from generation results.
+
+### 12.3 Test representation
+
+Test representation states how a case is specified: as structured manual steps or as a Cucumber (Gherkin) scenario.
+
+**Decision owner.** The Test Case Writer is the only component that decides representation. It decides once per case, after the case is grounded, cited, ordered, and deduplicated. This KB gives the criteria; it never classifies a specific case. Evaluators check that the decision follows these criteria but never reclassify. Publishers and downstream components consume the decision unchanged.
+
+Assign exactly one value per case:
+
+| Value | Assign when |
+|---|---|
+| `manual` | An approved source explicitly requires manual execution, **or** the case requires subjective human judgment, visual interpretation, unsupported physical interaction, or exploratory investigation. |
+| `cucumber` | **All** of the following hold: the behavior is deterministic and repeatable; the starting state is source-grounded and expressible as a precondition; the action or event is documented; the expected outcome is objective and observable; and the case can be written faithfully as Given / When / Then without inventing anything (see Section 12.4). |
+| `review` | The choice would require an unsupported assumption, required information is missing, or sources conflict. |
+
+Decision order:
+
+```text
+1. Manual explicitly required by a source, or human judgment needed?  → manual
+2. All cucumber conditions met?                                       → cucumber
+3. Otherwise                                                          → review
+```
+
+Rules:
+
+- Record a one-line `representation_reason` tied to the criterion that decided it, when the contract supports it.
+- Representation and automation suitability are independent. Do not classify a case as `cucumber` because it is an automation candidate, and do not classify it as `manual` because no automation exists yet.
+- `cucumber` does not mean step definitions or automation code exist, and does not authorize their creation.
+- Valid combinations include `cucumber` + `review` (behavior specifiable, automation feasibility unknown) and `manual` + `no`.
+- Test category (functional, boundary, security, NFR, compliance, and so on) does not decide representation by itself.
+- A `review` case stays in the canonical collection with its gap recorded. It is not rendered as Gherkin and is not published as a final test type until it is resolved.
+
+### 12.4 Gherkin authoring
+
+Applies only to cases classified as `cucumber`.
+
+- `Given` states the starting state from the case preconditions. It is never an action.
+- `When` states the single primary action or event from the case steps.
+- `Then` states the observable expected result from the case's expected results.
+- Use `And` / `But` only to extend the preceding keyword with another grounded item.
+- Use one `When` per scenario. Multiple primary actions mean the case is not atomic; split it or reconsider the representation.
+- Use domain language from approved sources. Do not add UI selectors, endpoints, payload fields, or step-definition wording.
+- Use `Scenario Outline` / `Examples` only when several grounded literal values share the same behavior and expected-result pattern.
+- The Gherkin scenario and the structured case MUST state the same preconditions, action, data, and expected result. Gherkin rewords the case; it never adds to or drops from it.
+- If a case cannot be expressed this way without invention, it is not `cucumber`. Reassign it under Section 12.3.
 
 ---
 
@@ -259,6 +305,26 @@ If a source says a field is required but provides no minimum or maximum length, 
 
 If a source says an action is prohibited but does not define the response, do not assert a specific message, status, or fallback. Preserve the source reference and request clarification for the expected response when it is necessary to determine pass or fail.
 
+### 13.4 Representation decisions
+
+All statements below are hypothetical.
+
+| Hypothetical source statement | Representation | Reason |
+|---|---|---|
+| “An order with all required details is created and the documented confirmation is shown.” | `cucumber` | Deterministic, grounded state, documented action, observable result |
+| “The confirmation page must be easy to understand.” | `manual` | Requires subjective human judgment |
+| “Notifications are sent within an acceptable time.” | `review` | No threshold is documented, so an objective outcome cannot be asserted |
+
+Illustrative Gherkin for the first row (pattern only):
+
+```gherkin
+Scenario: <TC ID> Order is created when all required details are supplied
+  Given the customer is in the state required by the approved scenario
+  When the customer submits the order with the supplied required details
+  Then the order is created
+  And the documented confirmation is displayed
+```
+
 ---
 
 ## 14. Review Checklist
@@ -275,6 +341,10 @@ Before a case is approved for the next workflow stage, confirm all applicable ch
 - [ ] Test data uses supplied constraints and approved classifications.
 - [ ] Expected results are observable and directly tied to approved behavior.
 - [ ] Test level, type, priority, risk, and automation classification are supported.
+- [ ] Representation was decided by the Test Case Writer, follows Section 12.3, and has a reason where the contract supports one.
+- [ ] Representation was not derived from automation suitability or test category alone.
+- [ ] Every `cucumber` case follows Section 12.4 and matches its structured case exactly.
+- [ ] `review` is used wherever choosing a representation would require guessing.
 - [ ] Boundaries, roles, states, dependencies, and failure handling were not invented.
 - [ ] Sensitive data and environment constraints are handled according to approved policy.
 - [ ] Duplicates were checked or marked unavailable when applicable.
@@ -294,5 +364,7 @@ Before a case is approved for the next workflow stage, confirm all applicable ch
 | Test data constraint | Approved condition that test data must satisfy or violate |
 | Traceability | Recorded relationship between a case and its approved upstream or downstream sources |
 | Automation candidate | Classification indicating suitability for further automation assessment, not authorization to generate code |
-
----
+| Test representation | The Test Case Writer's decision on how a case is specified: `manual`, `cucumber`, or `review` |
+| Gherkin | Structured Given / When / Then language used to specify a behavior |
+| Cucumber test | A test case represented as a Gherkin scenario; it does not imply automation code exists |
+| Manual test | A test case represented as structured steps for human execution |
