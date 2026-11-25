@@ -16,6 +16,7 @@
 - [ ] Every constraint's Obligated party line quotes the brief sentence that decides who performs the activity, or says "brief does not say". A party resolved from the product type alone ("it is software") is a fail. With no deciding sentence the constraint is unresolved Amber, never Red and never not-applicable
 - [ ] The score in regulatory-feasibility.md's header table, its Viability Score section, and items.viability.viability_score are the same number
 - [ ] Legend table comes first, with no heading above it: Source 1 (`L1-vision-idea-intake` with the brief's own date, or this run's Generated date when the brief has none), Status "Draft", Generated directly below Status, and the Approved by, Date of Approval and Human Approval Comments cells left empty
+- [ ] The document follows the regulatory-feasibility-template.md read from GitHub — its headings and order — with no {…} fill rule or template HTML comment left in it; it was saved to S3 as <folder_name>/regulatory-feasibility.md, with the artifact's bucket and key copied from the S3 writer's reply
 
 ## Scores (minimum per dimension)
 | Evaluator | ≥ | Checks |
