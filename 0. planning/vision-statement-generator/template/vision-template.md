@@ -10,7 +10,7 @@ document against this layout and publishes it to Confluence: never rename or reo
 
 | Field | Value |
 |---|---|
-| Source 1 | source agent: `L0-vision-idea-intake`, Date: {a date field in idea-brief.json (generated_date or date, at the root or under content/items), as yyyy-mm-dd. idea-brief.json usually carries NO date, and then this is the Generated date from regulatory-feasibility.md's first table. Never leave it empty} |
+| Source 1 | source agent: `L0-idea-intake`, Date: {a date field in idea-brief.json (generated_date or date, at the root or under content/items), as yyyy-mm-dd. idea-brief.json usually carries NO date, and then this is the Generated date from regulatory-feasibility.md's first table. Never leave it empty} |
 | Source 2 | source agent: `L0-regulatory-feasibility-checker`, Date: {the Generated row of regulatory-feasibility.md's first table} |
 | Source 3 | source agent: `L0-vision-market-analyzer`, Date: {the Generated row of market-analysis.md's header table} |
 | Status (Draft / In-Review / Approved) | Draft |

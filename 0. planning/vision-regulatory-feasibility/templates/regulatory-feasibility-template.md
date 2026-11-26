@@ -10,7 +10,7 @@ L0-vision-statement-generator read the finished document by these headings: neve
 
 | Field | Value |
 |---|---|
-| Source 1 | source agent: `L0-vision-idea-intake`, Date: {a date field in idea-brief.json (generated_date or date, at the root or under content/items), as yyyy-mm-dd. idea-brief.json usually carries NO date, and then this is the Generated date below. Never leave it empty} |
+| Source 1 | source agent: `L0-idea-intake`, Date: {a date field in idea-brief.json (generated_date or date, at the root or under content/items), as yyyy-mm-dd. idea-brief.json usually carries NO date, and then this is the Generated date below. Never leave it empty} |
 | Status (Draft / In-Review / Approved) | Draft |
 | Generated | {current_date as resolved in Input Ingestion — yyyy-mm-dd read from the current date tool (UTC), or "not available"; never copied from an example, a fixture, or this template} |
 | Approved by (Human Name) |  |
