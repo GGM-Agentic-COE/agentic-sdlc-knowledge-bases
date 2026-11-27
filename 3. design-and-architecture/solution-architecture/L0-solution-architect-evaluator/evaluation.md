@@ -24,7 +24,7 @@ This covers THIS evaluator's own meta-quality — not the generator's rubric
 - [ ] No style fix produced `****` or nested bold
 - [ ] Each check used the id set the target's layout defines (current template or older layout); a check neither layout supports is reported as not applicable with null counts — never run against an undefined id set and reported as passing
 - [ ] No fix writes **Approved** without naming the EA11 row it read; a target REQ-* budget is preferred over a KB default
-- [ ] A legitimate INSUFFICIENT_CONTEXT (target missing or DRAFT without allow_draft_target) is approved as-is — an honest upstream refusal is not something to fix
+- [ ] A legitimate INSUFFICIENT_CONTEXT (target missing or incomplete) is approved as-is — an honest upstream refusal is not something to fix. A draft target is a dry run, evaluated as usual, with the draft-target line and gate_ready false
 
 ## Scores (≥ threshold to pass)
 | Evaluator | ≥ | Checks |

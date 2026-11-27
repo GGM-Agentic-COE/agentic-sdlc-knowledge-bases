@@ -15,7 +15,7 @@
 - [ ] The target is quoted, never amended. Target ids are verbatim (including its `R-`, `QA-`, `DRV-` and `OI-` keys); only `APL-`, `DAT-1.x`, `SN-`, `FLOW-`, `SD-`, `RK-`, `AS-` and `PEND-` keys are minted, and `QA-` only when the target defines none. No `SEC-` or `TB-` id is minted
 
 **Target status (BLOCKING)**
-- [ ] The target is approved: status line **Approved** and the Enterprise Architect's approval row signed and dated (older layout: front matter `status: APPROVED`). Otherwise the output is TARGET_NOT_APPROVED, or, on a dry run, the document carries the draft-target line and gate_ready is false
+- [ ] The target is approved: status line **Approved** and the Enterprise Architect's approval row signed and dated (older layout: front matter `status: APPROVED`). Otherwise it is a dry run, never a failure: the document carries the draft-target line and gate_ready is false
 
 **Completeness (BLOCKING)**
 - [ ] APL-1 has every APP-2 component, plus any platform component the target names
@@ -56,7 +56,7 @@
 
 **Style (BLOCKING)**
 - [ ] The twelve numbered sections, Document Control and the appendix appear with their fixed headings and italic subtitles, in order
-- [ ] No narration about the agent, its run or its inputs ("this document cannot", "per instructions", "cannot be invented", "was not supplied", "appears above exactly once", input parameter names such as `hosting_cloud`, upload names, tool names)
+- [ ] No narration about the agent, its run or its inputs ("this document cannot", "per instructions", "cannot be invented", "was not supplied", "appears above exactly once", input parameter names, upload names, tool names)
 - [ ] No front matter, input-source table, gate banner or self-check record in the document
 - [ ] No KB section code (EA11, ES1–ES10, FD…, PRIN-…) in prose or table cells, including parenthetical citations; sources are named in words
 - [ ] Table cells hold one clause, at most 25 words; first columns are bold; status tags use the fixed vocabulary
